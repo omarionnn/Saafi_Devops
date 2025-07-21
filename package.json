@@ -1,15 +1,8 @@
 {
   "name": "saafi",
-  "version": "1.0.0",
-  "description": "## 🎯 Project Overview Saafi is a developer-first self-service DevOps platform for fast, secure, multi-cloud infrastructure provisioning (AWS & GCP) with GitHub integration. This document provides detailed implementation instructions for building the MVP.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
 }

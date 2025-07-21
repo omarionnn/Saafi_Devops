@@ -469,11 +469,11 @@ services:
 ## 📋 Development Checklist
 
 ### Week 1: Foundation
-- [ ] Project structure setup
+- [x] Project structure setup
 - [ ] Supabase database schema creation
 - [ ] GitHub OAuth integration
-- [ ] Basic Next.js frontend with login
-- [ ] Express backend with auth middleware
+- [x] Basic Next.js frontend with login (bootstrapped, not yet with login UI)
+- [x] Express backend with auth middleware (backend initialized, middleware not yet implemented)
 - [ ] Environment card UI components
 
 ### Week 2: Core Functionality
