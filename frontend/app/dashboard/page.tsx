@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { EnvironmentCard } from '../../components/EnvironmentCard';
 import { supabase } from '../../lib/supabase';
+import { useSearchParams } from 'next/navigation';
 
 interface Environment {
   id: string;
@@ -25,6 +26,9 @@ export default function DashboardPage() {
   const [error, setError] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const blueprintId = searchParams.get('blueprint');
+  const [selectedBlueprint, setSelectedBlueprint] = useState<Environment | null>(null);
 
   useEffect(() => {
     const fetchUserAndEnvironments = async () => {
@@ -52,6 +56,23 @@ export default function DashboardPage() {
     };
     fetchUserAndEnvironments();
   }, []);
+
+  useEffect(() => {
+    if (blueprintId) {
+      supabase
+        .from('blueprints')
+        .select('*')
+        .eq('id', blueprintId)
+        .single()
+        .then(({ data }) => {
+          if (data) {
+            setSelectedBlueprint(data as any);
+            // Only prefill if the form name is empty
+            setForm(f => f.name ? f : { ...f, name: data.name + ' Environment' });
+          }
+        });
+    }
+  }, [blueprintId]);
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
@@ -116,6 +137,11 @@ export default function DashboardPage() {
         <div className="text-red-500 mb-4">You must be logged in to view or create environments.</div>
       ) : (
         <>
+          {selectedBlueprint && (
+            <div className="mb-2 p-2 bg-blue-50 rounded">
+              <span className="font-semibold">Selected Blueprint:</span> {selectedBlueprint.name}
+            </div>
+          )}
           <form onSubmit={handleCreate} className="mb-8 p-4 border rounded">
             <div className="mb-2">
               <label className="block mb-1 font-medium">Name</label>
